@@ -12,6 +12,13 @@ def getAllTasks():
     for doc in docs:
         print(f'{doc.id} => {doc.to_dict()}')
 
+def move_completed_tasks():
+    task_comp = db.collection('Tasks').where('status', '==', 'COMP').stream()
+    for doc in task_comp:
+        print(f'doc :{doc.reference} and {doc.to_dict()}')
+        db.collection('CompletedTasks').add(doc.to_dict())
+        doc.reference.delete()
+
 def updatePackage():
     config = db.collection("Configurations").document("PackageToNameMap")
     doc = config.get()
@@ -32,3 +39,4 @@ def update_notification(key, value):
 
 
 updatePackage();
+move_completed_tasks()
