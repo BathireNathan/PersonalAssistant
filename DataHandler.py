@@ -38,5 +38,5 @@ def update_notification(key, value):
         db.collection("Notifications").document(doc.id).set({u'packageName': value}, merge=True)
 
 
-updatePackage();
+updatePackage()
 move_completed_tasks()
